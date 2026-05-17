@@ -9,6 +9,6 @@ const router = Router();
 
 router.post("/register", validateRequest(registerSchema), asyncHandler(register));
 router.post("/login", validateRequest(loginSchema), asyncHandler(login));
-router.get("/me", asyncHandler(authenticate), asyncHandler(me));
+router.get("/me", authenticate, asyncHandler(me));
 
 export default router;

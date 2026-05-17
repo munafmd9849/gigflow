@@ -13,11 +13,12 @@ export const notFound = (req: Request, _res: Response, next: NextFunction): void
 
 export const errorHandler = (
   error: unknown,
-  _req: Request,
+  req: Request,
   res: Response<ApiResponse<never>>,
   _next: NextFunction,
 ): void => {
   if (error instanceof AppError) {
+    logError(error, req);
     res.status(error.statusCode).json({
       success: false,
       message: error.message,
@@ -26,6 +27,7 @@ export const errorHandler = (
   }
 
   if (error instanceof ZodError) {
+    console.warn(`[error] 400 ${req.method} ${req.originalUrl}: ${error.issues[0]?.message ?? "Validation failed"}`);
     res.status(400).json({
       success: false,
       message: error.issues[0]?.message ?? "Validation failed",
@@ -34,6 +36,7 @@ export const errorHandler = (
   }
 
   if (isDuplicateKeyError(error)) {
+    console.warn(`[error] 409 ${req.method} ${req.originalUrl}: duplicate key`);
     res.status(409).json({
       success: false,
       message: "Email is already registered",
@@ -41,6 +44,7 @@ export const errorHandler = (
     return;
   }
 
+  console.error(`[error] 500 ${req.method} ${req.originalUrl}:`, error);
   res.status(500).json({
     success: false,
     message: "Internal server error",
@@ -49,4 +53,15 @@ export const errorHandler = (
 
 const isDuplicateKeyError = (error: unknown): error is ErrorWithCode => {
   return error instanceof Error && "code" in error && (error as ErrorWithCode).code === 11000;
+};
+
+const logError = (error: AppError, req: Request): void => {
+  const logMessage = `[error] ${error.statusCode} ${req.method} ${req.originalUrl}: ${error.message}`;
+
+  if (error.statusCode >= 500) {
+    console.error(logMessage);
+    return;
+  }
+
+  console.warn(logMessage);
 };
