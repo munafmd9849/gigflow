@@ -48,11 +48,11 @@ export const loginUser = async (input: LoginInput): Promise<AuthResult> => {
   return buildAuthResult(toAuthenticatedUser(user));
 };
 
-export const getUserById = async (userId: string): Promise<AuthenticatedUser> => {
+export const getUserById = async (userId: string): Promise<AuthenticatedUser | null> => {
   const user = await UserModel.findById(userId);
 
   if (!user) {
-    throw new AppError("User not found", 404);
+    return null;
   }
 
   return toAuthenticatedUser(user);
