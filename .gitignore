@@ -21,6 +21,7 @@ jspm_packages/
 /dist
 /build
 /out
+backend/dist/
 /.next/
 /.nuxt/
 /.output/
