@@ -7,6 +7,11 @@ interface ErrorWithCode extends Error {
   code?: number;
 }
 
+interface MongooseCastError extends Error {
+  name: "CastError";
+  path?: string;
+}
+
 export const notFound = (req: Request, _res: Response, next: NextFunction): void => {
   next(new AppError(`Route not found: ${req.originalUrl}`, 404));
 };
@@ -44,6 +49,15 @@ export const errorHandler = (
     return;
   }
 
+  if (isCastError(error)) {
+    console.warn(`[error] 400 ${req.method} ${req.originalUrl}: invalid ${error.path ?? "id"}`);
+    res.status(400).json({
+      success: false,
+      message: "Invalid resource id",
+    });
+    return;
+  }
+
   console.error(`[error] 500 ${req.method} ${req.originalUrl}:`, error);
   res.status(500).json({
     success: false,
@@ -53,6 +67,10 @@ export const errorHandler = (
 
 const isDuplicateKeyError = (error: unknown): error is ErrorWithCode => {
   return error instanceof Error && "code" in error && (error as ErrorWithCode).code === 11000;
+};
+
+const isCastError = (error: unknown): error is MongooseCastError => {
+  return error instanceof Error && error.name === "CastError";
 };
 
 const logError = (error: AppError, req: Request): void => {

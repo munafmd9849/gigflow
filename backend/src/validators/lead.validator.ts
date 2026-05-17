@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { LeadSort, LeadSource, LeadStatus } from "../types/lead.types";
 
+const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, "Invalid lead id");
+
 export const createLeadSchema = z.object({
   body: z.object({
     name: z.string().trim().min(2, "Name must be at least 2 characters").max(120),
@@ -12,7 +14,7 @@ export const createLeadSchema = z.object({
 
 export const updateLeadSchema = z.object({
   params: z.object({
-    id: z.string().min(1, "Lead id is required"),
+    id: objectIdSchema,
   }),
   body: z
     .object({
@@ -26,7 +28,7 @@ export const updateLeadSchema = z.object({
 
 export const leadIdParamSchema = z.object({
   params: z.object({
-    id: z.string().min(1, "Lead id is required"),
+    id: objectIdSchema,
   }),
 });
 

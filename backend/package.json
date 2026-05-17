@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "postman:test": "newman -c postman/GigFlow.postman_collection.json -e postman/GigFlow.local.postman_environment.json",
+    "postman:test": "newman run postman/GigFlow.postman_collection.json -e postman/GigFlow.local.postman_environment.json",
     "postman:test:report": "newman run postman/GigFlow.postman_collection.json -e postman/GigFlow.local.postman_environment.json --reporters cli,json --reporter-json-export postman/newman-report.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
