@@ -28,8 +28,51 @@ export const LeadTable = ({ leads, canDelete, isLoading, onEdit, onDelete }: Lea
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-      <div className="overflow-x-auto">
+    <>
+      <div className="space-y-3 p-3 md:hidden">
+        {leads.map((lead) => (
+          <div key={lead.id} className="rounded-lg border border-slate-200 bg-white p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="truncate font-semibold text-slate-950">{lead.name}</p>
+                <p className="mt-1 truncate text-sm text-slate-600">{lead.email}</p>
+              </div>
+              <StatusBadge status={lead.status} />
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <p className="text-xs font-medium uppercase text-slate-400">Source</p>
+                <p className="mt-1 text-slate-700">{lead.source}</p>
+              </div>
+              <div>
+                <p className="text-xs font-medium uppercase text-slate-400">Created</p>
+                <p className="mt-1 text-slate-700">{formatDate(lead.createdAt)}</p>
+              </div>
+            </div>
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                onClick={() => onEdit(lead)}
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              >
+                <Edit2 className="h-4 w-4" />
+                Edit
+              </button>
+              {canDelete ? (
+                <button
+                  type="button"
+                  onClick={() => onDelete(lead)}
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-rose-200 px-3 py-2 text-sm font-medium text-rose-600 hover:bg-rose-50"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Delete
+                </button>
+              ) : null}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="hidden overflow-x-auto md:block">
         <table className="min-w-[860px] w-full border-collapse text-left">
           <thead className="bg-slate-50 text-xs font-semibold uppercase text-slate-500">
             <tr>
@@ -80,7 +123,7 @@ export const LeadTable = ({ leads, canDelete, isLoading, onEdit, onDelete }: Lea
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
 

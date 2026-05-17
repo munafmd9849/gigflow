@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { useAuthStore } from "../stores/auth.store";
 import type { ApiErrorResponse } from "../types/api.types";
 
 export const api = axios.create({
@@ -9,46 +10,32 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const rawAuth = localStorage.getItem("gigflow-auth");
+  const token = useAuthStore.getState().token;
 
-  if (!rawAuth) {
-    return config;
-  }
-
-  const auth = parseStoredAuth(rawAuth);
-
-  if (auth?.state.token) {
-    config.headers.Authorization = `Bearer ${auth.state.token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
 });
 
-interface StoredAuthState {
-  state: {
-    token: string | null;
-  };
-}
+api.interceptors.response.use(
+  (response) => response,
+  (error: unknown) => {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      useAuthStore.getState().logout();
 
-const parseStoredAuth = (value: string): StoredAuthState | null => {
-  try {
-    const parsed: unknown = JSON.parse(value);
-
-    if (
-      typeof parsed === "object" &&
-      parsed !== null &&
-      "state" in parsed &&
-      typeof parsed.state === "object" &&
-      parsed.state !== null &&
-      "token" in parsed.state
-    ) {
-      return parsed as StoredAuthState;
+      if (window.location.pathname !== "/login" && window.location.pathname !== "/register") {
+        window.location.assign("/login");
+      }
     }
 
-    return null;
-  } catch {
-    return null;
-  }
+    return Promise.reject(error);
+  },
+);
+
+export const isUnauthorizedError = (error: unknown): boolean => {
+  return error instanceof AxiosError && error.response?.status === 401;
 };
 
 export const getApiErrorMessage = (error: unknown): string => {

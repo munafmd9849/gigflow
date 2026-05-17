@@ -38,8 +38,8 @@ export const LeadModal = ({ mode, lead, isSubmitting, onClose, onSubmit }: LeadM
   }, [lead, reset]);
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/50 px-4">
-      <div className="w-full max-w-2xl rounded-lg border border-slate-200 bg-white shadow-xl">
+    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/50 px-4 py-6">
+      <div className="max-h-[calc(100vh-3rem)] w-full max-w-2xl overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-xl">
         <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
           <div>
             <h2 className="text-base font-semibold text-slate-950">
