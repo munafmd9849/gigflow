@@ -1,4 +1,4 @@
-import { AISection } from "../../components/landing/AISection";
+import { WorkflowSection } from "../../components/landing/WorkflowSection";
 import { CTASection } from "../../components/landing/CTASection";
 import { FeaturesSection } from "../../components/landing/FeaturesSection";
 import { Footer } from "../../components/landing/Footer";
@@ -14,7 +14,7 @@ export const LandingPage = () => {
         <HeroSection />
         <SocialProof />
         <FeaturesSection />
-        <AISection />
+        <WorkflowSection />
         <CTASection />
       </main>
       <Footer />

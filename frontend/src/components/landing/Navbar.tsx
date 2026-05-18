@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../stores/auth.store";
 
 export const Navbar = () => {
+  const token = useAuthStore((state) => state.token);
+
   return (
     <motion.nav 
       initial={{ y: -20, opacity: 0 }}
@@ -16,14 +19,20 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">
           <a href="#features" className="hover:text-white transition-colors">Features</a>
           <a href="#analytics" className="hover:text-white transition-colors">Analytics</a>
-          <a href="#ai" className="hover:text-white transition-colors flex items-center gap-1">
-            <span className="text-blue-400">✧</span> AI
+          <a href="#workflows" className="hover:text-white transition-colors flex items-center gap-1">
+            <span className="text-blue-400">✧</span> Workflows
           </a>
           <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
         </div>
         <div className="flex items-center gap-4">
-          <Link to="/login" className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">Login</Link>
-          <Link to="/register" className="text-sm font-medium bg-white text-black px-4 py-2 rounded-lg hover:bg-neutral-200 transition-colors">Get Started</Link>
+          {token ? (
+            <Link to="/dashboard" className="text-sm font-medium bg-white text-black px-4 py-2 rounded-lg hover:bg-neutral-200 transition-colors">Dashboard</Link>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm font-medium text-neutral-300 hover:text-white transition-colors">Login</Link>
+              <Link to="/register" className="text-sm font-medium bg-white text-black px-4 py-2 rounded-lg hover:bg-neutral-200 transition-colors">Get Started</Link>
+            </>
+          )}
         </div>
       </div>
     </motion.nav>

@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../stores/auth.store";
 
 export const HeroSection = () => {
+  const token = useAuthStore((state) => state.token);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12">
       {/* Background gradients */}
@@ -17,7 +20,7 @@ export const HeroSection = () => {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-8"
         >
           <Sparkles className="w-4 h-4" />
-          <span>GigFlow AI 2.0 is now live</span>
+          <span>GigFlow 2.0 is now live</span>
         </motion.div>
         
         <motion.h1 
@@ -26,7 +29,7 @@ export const HeroSection = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight mb-8"
         >
-          The AI-native CRM for <br className="hidden md:block" />
+          The modern CRM for <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">modern sales teams</span>
         </motion.h1>
         
@@ -45,12 +48,20 @@ export const HeroSection = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link to="/register" className="w-full sm:w-auto px-8 py-4 bg-white text-black rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors">
-            Start Free <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link to="/login" className="w-full sm:w-auto px-8 py-4 bg-neutral-800 text-white rounded-xl font-medium border border-neutral-700 flex items-center justify-center hover:bg-neutral-700 transition-colors">
-            View Dashboard
-          </Link>
+          {token ? (
+            <Link to="/dashboard" className="w-full sm:w-auto px-8 py-4 bg-white text-black rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors">
+              Go to Dashboard <ArrowRight className="w-4 h-4" />
+            </Link>
+          ) : (
+            <>
+              <Link to="/register" className="w-full sm:w-auto px-8 py-4 bg-white text-black rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-neutral-200 transition-colors">
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link to="/login" className="w-full sm:w-auto px-8 py-4 bg-neutral-800 text-white rounded-xl font-medium border border-neutral-700 flex items-center justify-center hover:bg-neutral-700 transition-colors">
+                Login
+              </Link>
+            </>
+          )}
         </motion.div>
       </div>
     </section>
