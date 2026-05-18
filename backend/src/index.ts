@@ -22,6 +22,14 @@ const startServer = async (): Promise<void> => {
     });
   });
 
+  app.get("/", (_req, res) => {
+    res.status(200).json({
+      success: true,
+      message: "Welcome to GigFlow API",
+      version: "1.0.0"
+    });
+  });
+
   app.use("/api", routes);
   app.use(notFound);
   app.use(errorHandler);
