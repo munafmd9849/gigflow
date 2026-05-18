@@ -65,7 +65,7 @@ export const LoginPage = () => {
           <input
             {...register("email")}
             type="email"
-            className="h-10 w-full rounded-md border border-slate-200 px-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+            className="h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10 placeholder:text-neutral-500 transition"
             placeholder="aarav.mehta@gigflow.dev"
           />
         </AuthField>
@@ -73,22 +73,22 @@ export const LoginPage = () => {
           <input
             {...register("password")}
             type="password"
-            className="h-10 w-full rounded-md border border-slate-200 px-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+            className="h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10 placeholder:text-neutral-500 transition"
             placeholder="Password123"
           />
         </AuthField>
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-slate-950 px-4 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition disabled:opacity-60"
         >
           {mutation.isPending ? "Signing in..." : "Sign in"}
           <ArrowRight className="h-4 w-4" />
         </button>
       </form>
-      <p className="mt-5 text-center text-sm text-slate-600">
+      <p className="mt-5 text-center text-sm text-neutral-400">
         New to GigFlow?{" "}
-        <Link to="/register" className="font-semibold text-slate-950 hover:underline">
+        <Link to="/register" className="font-semibold text-white hover:underline">
           Create an account
         </Link>
       </p>
@@ -104,12 +104,16 @@ interface AuthShellProps {
 
 const AuthShell = ({ title, subtitle, children }: AuthShellProps) => {
   return (
-    <main className="grid min-h-screen place-items-center bg-slate-50 px-4 py-10">
-      <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+    <main className="grid min-h-screen place-items-center px-4 py-10 relative overflow-hidden">
+      {/* Background gradients for auth page to match the landing page theme */}
+      <div className="absolute top-1/4 -left-10 w-72 h-72 bg-blue-600/20 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-10 w-72 h-72 bg-purple-600/20 rounded-full blur-[100px] pointer-events-none" />
+      
+      <div className="relative z-10 w-full max-w-md rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-md shadow-2xl">
         <div className="mb-6 text-center">
-          <p className="text-lg font-semibold text-slate-950">GigFlow</p>
-          <h1 className="mt-4 text-2xl font-semibold text-slate-950">{title}</h1>
-          <p className="mt-2 text-sm text-slate-500">{subtitle}</p>
+          <p className="text-lg font-semibold text-white">GigFlow</p>
+          <h1 className="mt-4 text-2xl font-semibold text-white">{title}</h1>
+          <p className="mt-2 text-sm text-neutral-400">{subtitle}</p>
         </div>
         {children}
       </div>
@@ -126,7 +130,7 @@ interface AuthFieldProps {
 const AuthField = ({ label, error, children }: AuthFieldProps) => {
   return (
     <label className="block">
-      <span className="text-sm font-medium text-slate-700">{label}</span>
+      <span className="text-sm font-medium text-neutral-300">{label}</span>
       <span className="mt-1 block">{children}</span>
       {error ? <span className="mt-1 block text-xs font-medium text-rose-600">{error}</span> : null}
     </label>

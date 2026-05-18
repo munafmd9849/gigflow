@@ -38,14 +38,14 @@ export const LeadModal = ({ mode, lead, isSubmitting, onClose, onSubmit }: LeadM
   }, [lead, reset]);
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/50 px-4 py-6">
-      <div className="max-h-[calc(100vh-3rem)] w-full max-w-2xl overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-xl">
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/50 backdrop-blur-sm px-4 py-6">
+      <div className="max-h-[calc(100vh-3rem)] w-full max-w-2xl overflow-y-auto rounded-xl border border-white/10 bg-neutral-900/90 backdrop-blur-xl shadow-2xl">
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
           <div>
-            <h2 className="text-base font-semibold text-slate-950">
+            <h2 className="text-base font-semibold text-white">
               {mode === "create" ? "Create lead" : "Update lead"}
             </h2>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-neutral-400">
               {mode === "create" ? "Add a new prospect to the pipeline." : "Edit lead details and status."}
             </p>
           </div>
@@ -53,7 +53,7 @@ export const LeadModal = ({ mode, lead, isSubmitting, onClose, onSubmit }: LeadM
             type="button"
             onClick={onClose}
             disabled={isSubmitting}
-            className="rounded-md p-2 text-slate-500 hover:bg-slate-100 disabled:opacity-60"
+            className="rounded-md p-2 text-neutral-400 hover:bg-white/10 hover:text-white transition disabled:opacity-60"
             aria-label="Close modal"
           >
             <X className="h-5 w-5" />
@@ -65,7 +65,7 @@ export const LeadModal = ({ mode, lead, isSubmitting, onClose, onSubmit }: LeadM
             <Field label="Name" error={errors.name?.message}>
               <input
                 {...register("name")}
-                className="h-10 w-full rounded-md border border-slate-200 px-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+                className="h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10"
                 placeholder="Rahul Sharma"
               />
             </Field>
@@ -73,14 +73,14 @@ export const LeadModal = ({ mode, lead, isSubmitting, onClose, onSubmit }: LeadM
               <input
                 {...register("email")}
                 type="email"
-                className="h-10 w-full rounded-md border border-slate-200 px-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+                className="h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10"
                 placeholder="rahul.sharma@pixelcraft.in"
               />
             </Field>
             <Field label="Status" error={errors.status?.message}>
               <select
                 {...register("status")}
-                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+                className="h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10"
               >
                 {leadStatuses.map((status) => (
                   <option key={status} value={status}>
@@ -92,7 +92,7 @@ export const LeadModal = ({ mode, lead, isSubmitting, onClose, onSubmit }: LeadM
             <Field label="Source" error={errors.source?.message}>
               <select
                 {...register("source")}
-                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+                className="h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10"
               >
                 {leadSources.map((source) => (
                   <option key={source} value={source}>
@@ -103,19 +103,19 @@ export const LeadModal = ({ mode, lead, isSubmitting, onClose, onSubmit }: LeadM
             </Field>
           </div>
 
-          <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
+          <div className="flex justify-end gap-2 border-t border-white/10 pt-4">
             <button
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="rounded-md border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-60"
+              className="rounded-md border border-white/10 px-4 py-2 text-sm font-medium text-neutral-300 hover:bg-white/10 hover:text-white transition disabled:opacity-60"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60"
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition disabled:opacity-60"
             >
               {isSubmitting ? "Saving..." : mode === "create" ? "Create lead" : "Save changes"}
             </button>
@@ -135,7 +135,7 @@ interface FieldProps {
 const Field = ({ label, error, children }: FieldProps) => {
   return (
     <label className="block">
-      <span className="text-sm font-medium text-slate-700">{label}</span>
+      <span className="text-sm font-medium text-neutral-300">{label}</span>
       <span className="mt-1 block">{children}</span>
       {error ? <span className="mt-1 block text-xs font-medium text-rose-600">{error}</span> : null}
     </label>

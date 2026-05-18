@@ -18,16 +18,16 @@ export const LeadFilters = ({
   onReset,
 }: LeadFiltersProps) => {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4">
+    <div className="rounded-lg border border-white/10 bg-white/5 p-4 backdrop-blur-md">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-sm font-semibold text-slate-950">
-          <Filter className="h-4 w-4 text-slate-500" />
+        <div className="flex items-center gap-2 text-sm font-semibold text-white">
+          <Filter className="h-4 w-4 text-neutral-400" />
           Filters
         </div>
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex items-center gap-2 rounded-md px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100"
+          className="inline-flex items-center gap-2 rounded-md px-2.5 py-1.5 text-xs font-medium text-neutral-300 hover:bg-white/10 transition"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           Reset
@@ -41,7 +41,7 @@ export const LeadFilters = ({
           onChange={(event) =>
             onFilterChange({ status: event.target.value ? filtersStatusValue(event.target.value) : undefined })
           }
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+          className="h-10 rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10"
         >
           <option value="">All statuses</option>
           {leadStatuses.map((status) => (
@@ -55,7 +55,7 @@ export const LeadFilters = ({
           onChange={(event) =>
             onFilterChange({ source: event.target.value ? filtersSourceValue(event.target.value) : undefined })
           }
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+          className="h-10 rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10"
         >
           <option value="">All sources</option>
           {leadSources.map((source) => (
@@ -67,7 +67,7 @@ export const LeadFilters = ({
         <select
           value={filters.sort}
           onChange={(event) => onFilterChange({ sort: event.target.value as LeadSort })}
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-200/60"
+          className="h-10 rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-white/20 focus:ring-4 focus:ring-white/10"
         >
           <option value="latest">Latest</option>
           <option value="oldest">Oldest</option>

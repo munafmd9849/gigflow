@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { LeadFilters } from "../../components/leads/LeadFilters";
 import { LeadModal } from "../../components/leads/LeadModal";
 import { LeadTable } from "../../components/leads/LeadTable";
+import { LeadDetailDrawer } from "../../components/leads/LeadDetailDrawer";
 import { Pagination } from "../../components/leads/Pagination";
 import { ConfirmDialog } from "../../components/ui/ConfirmDialog";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -26,6 +27,7 @@ export const LeadsPage = () => {
   const [searchValue, setSearchValue] = useState(searchParams.get("search") ?? "");
   const [modalState, setModalState] = useState<{ mode: "create" | "update"; lead?: Lead } | null>(null);
   const [leadToDelete, setLeadToDelete] = useState<Lead | null>(null);
+  const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
   const debouncedSearch = useDebounce(searchValue, 500);
   const queryClient = useQueryClient();
   const user = useAuthStore((state) => state.user);
@@ -128,9 +130,9 @@ export const LeadsPage = () => {
     <div className="mx-auto max-w-7xl space-y-5">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="text-sm font-medium text-slate-500">Pipeline</p>
-          <h1 className="mt-1 text-2xl font-semibold text-slate-950">Leads</h1>
-          <p className="mt-1 text-sm text-slate-600">Create, filter, update, and export lead records.</p>
+          <p className="text-sm font-medium text-neutral-400">Pipeline</p>
+          <h1 className="mt-1 text-2xl font-semibold text-white">Leads</h1>
+          <p className="mt-1 text-sm text-neutral-300">Create, filter, update, and export lead records.</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           {canExport ? (
@@ -138,7 +140,7 @@ export const LeadsPage = () => {
               type="button"
               onClick={() => exportMutation.mutate()}
               disabled={exportMutation.isPending}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-60"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-white/10 bg-white/5 backdrop-blur-md px-4 text-sm font-semibold text-neutral-300 hover:bg-white/10 disabled:opacity-60 transition"
             >
               <Download className="h-4 w-4" />
               {exportMutation.isPending ? "Exporting..." : "Export CSV"}
@@ -147,7 +149,7 @@ export const LeadsPage = () => {
           <button
             type="button"
             onClick={() => setModalState({ mode: "create" })}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-slate-950 px-4 text-sm font-semibold text-white hover:bg-slate-800"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition"
           >
             <Plus className="h-4 w-4" />
             New lead
@@ -164,18 +166,19 @@ export const LeadsPage = () => {
       />
 
       {leadsQuery.isError ? (
-        <div className="rounded-lg border border-rose-200 bg-rose-50 p-5">
-          <h2 className="text-sm font-semibold text-rose-900">Unable to load leads</h2>
-          <p className="mt-1 text-sm text-rose-700">{getApiErrorMessage(leadsQuery.error)}</p>
+        <div className="rounded-lg border border-rose-500/20 bg-rose-500/10 p-5 backdrop-blur-md">
+          <h2 className="text-sm font-semibold text-rose-400">Unable to load leads</h2>
+          <p className="mt-1 text-sm text-rose-300">{getApiErrorMessage(leadsQuery.error)}</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div className="overflow-hidden rounded-lg border border-white/10 bg-white/5 backdrop-blur-md">
           <LeadTable
             leads={leads}
             canDelete={canDelete}
             isLoading={leadsQuery.isLoading}
             onEdit={(lead) => setModalState({ mode: "update", lead })}
             onDelete={setLeadToDelete}
+            onViewDetail={setSelectedLeadId}
           />
           {pagination ? (
             <Pagination pagination={pagination} isLoading={leadsQuery.isFetching} onPageChange={(page) => handleFilterChange({ page })} />
@@ -202,6 +205,8 @@ export const LeadsPage = () => {
           onConfirm={() => deleteMutation.mutate(leadToDelete.id)}
         />
       ) : null}
+
+      <LeadDetailDrawer leadId={selectedLeadId} onClose={() => setSelectedLeadId(null)} />
     </div>
   );
 };

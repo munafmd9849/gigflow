@@ -44,3 +44,30 @@ export interface LeadInput {
 }
 
 export type UpdateLeadInput = Partial<LeadInput>;
+
+export type ActivityType =
+  | "lead_created"
+  | "status_changed"
+  | "source_changed"
+  | "field_updated"
+  | "note_added";
+
+export interface LeadActivity {
+  _id: string;
+  leadId: string;
+  actorId: string;
+  actorName: string;
+  type: ActivityType;
+  meta: {
+    field?: string;
+    from?: string;
+    to?: string;
+    note?: string;
+  };
+  createdAt: string;
+}
+
+export interface LeadDetailResponse {
+  lead: Lead;
+  activity: LeadActivity[];
+}

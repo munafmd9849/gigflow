@@ -1,6 +1,6 @@
 import { api } from "../lib/api";
 import type { ApiResponse } from "../types/api.types";
-import type { Lead, LeadFilters, LeadInput, LeadListResponse, UpdateLeadInput } from "../types/lead.types";
+import type { Lead, LeadFilters, LeadInput, LeadListResponse, UpdateLeadInput, LeadDetailResponse } from "../types/lead.types";
 
 interface LeadData {
   lead: Lead;
@@ -51,6 +51,16 @@ export const exportCsv = async (): Promise<Blob> => {
 
   return response.data;
 };
+
+export const getLeadDetail = async (id: string): Promise<LeadDetailResponse> => {
+  const response = await api.get<ApiResponse<LeadDetailResponse>>(`/leads/${id}`);
+  return response.data.data!;
+};
+
+export const addNote = async (id: string, note: string): Promise<void> => {
+  await api.post(`/leads/${id}/notes`, { note });
+};
+
 
 const buildLeadParams = (filters: LeadFilters): Record<string, string | number> => {
   const params: Record<string, string | number> = {

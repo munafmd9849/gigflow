@@ -16,7 +16,7 @@ export const DashboardShell = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen text-white">
       <div className="flex min-h-screen">
         <DashboardSidebar
           isOpen={isSidebarOpen}

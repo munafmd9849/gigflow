@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { create, exportCsv, getById, list, remove, update } from "../controllers/lead.controller";
+import { addNote } from "../controllers/note.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 import { authorize } from "../middlewares/authorize.middleware";
 import { validateRequest } from "../middlewares/validate.middleware";
@@ -13,6 +14,7 @@ router.use(authenticate);
 
 router.get("/export/csv", authorize(UserRole.Admin), asyncHandler(exportCsv));
 router.post("/", authorize(UserRole.Admin, UserRole.Sales), validateRequest(createLeadSchema), asyncHandler(create));
+router.post("/:id/notes", asyncHandler(addNote));
 router.get("/", authorize(UserRole.Admin, UserRole.Sales), validateRequest(listLeadsSchema), asyncHandler(list));
 router.get("/:id", authorize(UserRole.Admin, UserRole.Sales), validateRequest(leadIdParamSchema), asyncHandler(getById));
 router.patch("/:id", authorize(UserRole.Admin, UserRole.Sales), validateRequest(updateLeadSchema), asyncHandler(update));

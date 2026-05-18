@@ -6,12 +6,13 @@ import { LoginPage } from "./pages/auth/LoginPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { DashboardHomePage } from "./pages/dashboard/DashboardHomePage";
 import { LeadsPage } from "./pages/dashboard/LeadsPage";
+import { LandingPage } from "./pages/landing/LandingPage";
 
 function App() {
   return (
     <AuthBootstrap>
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route

@@ -5,10 +5,10 @@ interface StatusBadgeProps {
 }
 
 const statusStyles: Record<LeadStatus, string> = {
-  New: "border-blue-200 bg-blue-50 text-blue-700",
-  Contacted: "border-amber-200 bg-amber-50 text-amber-700",
-  Qualified: "border-emerald-200 bg-emerald-50 text-emerald-700",
-  Lost: "border-rose-200 bg-rose-50 text-rose-700",
+  New: "border-blue-500/30 bg-blue-500/20 text-blue-400",
+  Contacted: "border-amber-500/30 bg-amber-500/20 text-amber-400",
+  Qualified: "border-emerald-500/30 bg-emerald-500/20 text-emerald-400",
+  Lost: "border-red-500/30 bg-red-500/20 text-red-400",
 };
 
 export const StatusBadge = ({ status }: StatusBadgeProps) => {

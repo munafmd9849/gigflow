@@ -23,19 +23,19 @@ export const DashboardSidebar = ({ isOpen, onClose, onLogout }: DashboardSidebar
         aria-hidden="true"
       />
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[min(18rem,calc(100vw-2rem))] flex-col border-r border-slate-200 bg-white transition-transform lg:static lg:w-72 lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-[min(18rem,calc(100vw-2rem))] flex-col border-r border-white/10 bg-white/5 backdrop-blur-xl transition-transform lg:static lg:w-72 lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-16 items-center justify-between border-b border-slate-200 px-5">
+        <div className="flex h-16 items-center justify-between border-b border-white/10 px-5">
           <div>
-            <p className="text-lg font-semibold text-slate-950">GigFlow</p>
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">CRM Dashboard</p>
+            <p className="text-lg font-semibold text-white">GigFlow</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-neutral-400">CRM Dashboard</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-2 text-slate-500 hover:bg-slate-100 lg:hidden"
+            className="rounded-md p-2 text-neutral-400 hover:bg-white/10 hover:text-white lg:hidden"
             aria-label="Close sidebar"
           >
             <X className="h-5 w-5" />
@@ -55,8 +55,8 @@ export const DashboardSidebar = ({ isOpen, onClose, onLogout }: DashboardSidebar
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition ${
                     isActive
-                      ? "bg-slate-950 text-white"
-                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                      ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
+                      : "text-neutral-400 hover:bg-white/10 hover:text-white"
                   }`
                 }
               >
@@ -67,11 +67,11 @@ export const DashboardSidebar = ({ isOpen, onClose, onLogout }: DashboardSidebar
           })}
         </nav>
 
-        <div className="border-t border-slate-200 p-3">
+        <div className="border-t border-white/10 p-3">
           <button
             type="button"
             onClick={onLogout}
-            className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+            className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-neutral-400 hover:bg-white/10 hover:text-white transition"
           >
             <LogOut className="h-4 w-4" />
             Logout
